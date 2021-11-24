@@ -1,0 +1,9 @@
+lab 7.
+
+Zad 1.
+
+1.
+	Create table uczestnicy as select * from wikingowie.uczestnicy;
+	Create table etapy_wyprawy as select * from wikingowie.etapy_wyprawy;
+	Create table sektor as select * from wikingowie.sektor;
+	Create table wyprawa as select * from wikingowie.wyprawa;
