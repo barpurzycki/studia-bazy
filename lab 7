@@ -7,3 +7,6 @@ Zad 1.
 	Create table etapy_wyprawy as select * from wikingowie.etapy_wyprawy;
 	Create table sektor as select * from wikingowie.sektor;
 	Create table wyprawa as select * from wikingowie.wyprawa;
+2.
+	select nazwa, idKreatury from kreatura where idKreatury not in 
+	(select distinct id_uczestnika from uczestnicy);
