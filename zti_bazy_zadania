@@ -1,0 +1,17 @@
+
+1. Select nazwisko from pracownik order by nazwisko asc;
+2. Select imie, nazwisko, pensja from pracownik where year(data_urodzenia)>1979;
+3. Select * from pracownik where pensja between 3500 AND 5000;
+4. Select towar from stan_magazynowy where ilosc > 10;
+5. Select nazwa_towaru from towar where nazwa_towaru like "A%" OR nazwa_towaru  like "B%" OR nazwa_towaru  like "C%";
+6. Select pelna_nazwa from klient where czy_firma=0;
+7. Select * from zamowienie order by data_zamowienia desc limit 10;
+8. Select imie, nazwisko, pensja from pracownik order by pensja asc limit 5;
+9. Select nazwa_towaru from towar where nazwa_towaru not like "A%" order by cena_zakupu desc limit 10;
+10. Select t.nazwa_towaru from towar t 
+	inner join stan_magazynowy st on t.id_towaru=st.towar
+	inner join jednostka_miary j on st.jm=j.id_jednostki
+	where j.nazwa="szt"
+	order by t.nazwa_towaru asc, t.cena_zakupu desc;
+11. Create table towary_powyzej_100 Select * from towar where cena >= 100;
+12. Create table pracownik_50_plus Select * from pracownik where year(now())-year(data_urodzenia) >= 50;
