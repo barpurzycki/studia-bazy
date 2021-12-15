@@ -15,3 +15,6 @@
 	order by t.nazwa_towaru asc, t.cena_zakupu desc;
 11. Create table towary_powyzej_100 Select * from towar where cena >= 100;
 12. Create table pracownik_50_plus Select * from pracownik where year(now())-year(data_urodzenia) >= 50;
+
+1. Select p.imie, p.nazwisko, d.nazwa from pracownik p
+	inner join dzial d on p.dzial=d.id_dzialu;
