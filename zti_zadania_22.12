@@ -1,0 +1,94 @@
+Bazy zti_lab2
+
+1. 
+Select p.imie, p.nazwisko, d.nazwa from pracownik p
+inner join dzial d on p.dzial=d.id_dzialu;
+
+2.
+Select t.nazwa_towaru, k.nazwa_kategori, st.ilosc from towar t
+inner join kategoria k 
+on t.kategoria=k.id_kategori
+inner join stan_magazynowy st on 
+t.id_towaru=st.towar
+order by st.ilosc desc;
+3.
+Select z.id_zamowienia, z.data_zamowienia from zamowienie z 
+inner join status_zamowienia sz
+on z.status_zamowienia=sz.id_statusu_zamowienia
+where sz.nazwa_statusu_zamowienia="anulowane";
+4.
+Select k.pelna_nazwa, ak.miejscowosc from klient k 
+inner join adres_klienta ak
+on k.id_klienta=ak.klient
+where ak.miejscowosc="Olsztyn";
+5.
+Select jmiary.id_jednostki, jmiary.nazwa from jednostka_miary jmiary 
+left join stan_magazynowy sm
+on jmiary.id_jednostki=sm.jm
+where sm.jm is null;
+6.
+Select z.numer_zamowienia, t.nazwa_towaru, sm.ilosc, pz.cena from zamowienie z 
+inner join pozycja_zamowienia pz 
+on z.id_zamowienia=pz.zamowienie
+inner join towar t 
+on pz.towar=t.id_towaru
+inner join stan_magazynowy sm
+on t.id_towaru=sm.towar
+where year(z.data_zamowienia)=2018;
+7.
+Create table towary_full_info as
+(select t.nazwa_towaru, t.cena_zakupu, k.nazwa_kategori, sm.ilosc, jm.nazwa from __firma_zti.towar as t
+inner join __firma_zti.kategoria as k 
+on t.kategoria=k.id_kategori 
+inner join __firma_zti.stan_magazynowy as sm 
+on t.id_towaru=sm.towar 
+inner join __firma_zti.jednostka_miary as jm
+on sm.jm=jm.id_jednostki);
+8.
+Select pz.id_pozycji, z.data_zamowienia from pozycja_zamowienia pz
+inner join zamowienie z
+on pz.zamowienie=z.id_zamowienia
+order by z.data_zamowienia asc 
+limit 5;
+9.
+Select z.id_zamowienia, sz.nazwa_statusu_zamowienia from zamowienie z 
+inner join status_zamowienia sz
+on z.status_zamowienia=sz.id_statusu_zamowienia
+where sz.nazwa_statusu_zamowienia not like "zrealizowane";
+10.
+select * from adres_klienta
+where kod not regexp '[0-9]{2}-[0-9]{3}';
+
+Zad lab3
+
+1.
+Select imie, nazwisko, year(data_urodzenia) from pracownik;
+2.
+Select imie, nazwisko, year(now())-year(data_urodzenia) as wiek from pracownik;
+3.
+Select d.nazwa, count(p.id_pracownika) from dzial d
+inner join pracownik p 
+on d.id_dzialu=p.dzial 
+group by d.nazwa;
+4.
+Select k.nazwa_kategori, sum(sm.ilosc) from kategoria k 
+inner join towar t 
+on k.id_kategori=t.kategoria
+inner join stan_magazynowy sm
+on t.id_towaru=sm.towar
+group by k.nazwa_kategori;
+5.
+Select k.nazwa_kategori, group_concat(t.nazwa_towaru) from kategoria k
+inner join towar t 
+on t.kategoria=k.id_kategori
+group by k.nazwa_kategori;
+6.
+Select round(avg(pensja), 2) from pracownik;
+7. 
+Select round(avg(pensja), 2) from pracownik
+where year(now())-year(data_zatrudnienia)>=5;
+8.
+
+9.
+
+10.
