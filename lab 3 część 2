@@ -1,0 +1,64 @@
+lab 3 część 2
+
+1.
+Select d.nazwa, min(p.pensja), avg(p.pensja), max(p.pensja) from dzial d
+inner join pracownik p
+on d.id_dzialu=p.dzial
+group by d.nazwa;
+2. 
+Select k.pelna_nazwa, z.numer_zamowienia, sum(pz.cena * pz.ilosc) as wartosc
+from klient k
+join zamowienie z 
+on k.id_klienta = z.klient
+join pozycja_zamowienia pz 
+on z.id_zamowienia = pz.zamowienie
+group by z.id_zamowienia
+order by wartosc desc limit 10;
+3.
+Select year(z.data_zamowienia) as rok, sum(pz.ilosc*pz.cena) as wartosc from pozycja_zamowienia pz 
+join zamowienie z 
+on pz.zamowienie=z.id_zamowienia 
+group by rok order by wartosc desc;
+4.
+Select sum(pz.ilosc*pz.cena) as wartosc from pozycja_zamowienia pz 
+join zamowienie z 
+on pz.zamowienie=z.id_zamowienia 
+where z.status_zamowienia=6;
+5.
+Select ak.miejscowosc, count(z.id_zamowienia) as liczba_zamowien, sum(pz.ilosc*pz.cena) as wartosc from zamowienie z 
+join klient k 
+on z.klient=k.id_klienta 
+join adres_klienta ak 
+on k.id_klienta=ak.klient 
+join pozycja_zamowienia pz 
+on z.id_zamowienia=pz.zamowienie 
+where ak.typ_adresu=1 
+group by ak.miejscowosc;
+6.
+Select SUM((p.cena-t.cena_zakupu)*p.ilosc) as wartosc from pozycja_zamowienia p 
+inner join zamowienie z 
+on p.zamowienie=z.id_zamowienia 
+inner join towar t 
+on p.towar=t.id_towaru 
+where z.status_zamowienia = 5;
+7.
+Select year(z.data_zamowienia) as rok, sum((pz.cena-t.cena_zakupu)*pz.ilosc) as dochod from pozycja_zamowienia pz 
+join zamowienie z 
+on pz.zamowienie=z.id_zamowienia 
+join towar t 
+on pz.towar=t.id_towaru 
+where z.status_zamowienia=5 
+group by rok;
+8.
+Select k.nazwa_kategori, sum(t.cena_zakupu*sm.ilosc) as wartosc_stanu_magazynowego from towar t 
+join stan_magazynowy sm 
+on t.id_towaru=sm.towar 
+join kategoria k 
+on t.kategoria=k.id_kategori 
+group by k.nazwa_kategori;
+9.
+Select monthname(data_urodzenia) as miesiac, count(id_pracownika) as ilosc from pracownik 
+group by month(data_urodzenia), miesiac 
+order by month(data_urodzenia);
+10.
+Select imie, nazwisko, PERIOD_DIFF(date_format(curdate(), '%Y%m'),date_format(data_zatrudnienia, '%Y%m'))*pensja as pensja from pracownik;
